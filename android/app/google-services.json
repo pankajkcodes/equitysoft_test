@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1072505666168",
+    "project_id": "equitysoft-test-1",
+    "storage_bucket": "equitysoft-test-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072505666168:android:587a14a53d518adf064b8d",
+        "android_client_info": {
+          "package_name": "com.pankajkcodes.equitysoft_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072505666168-hmlcu2nko53gvlmpn77u7bv06anppn0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwSeFVNIvQGdwZOfKA726XrSXUopdtEZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072505666168-hmlcu2nko53gvlmpn77u7bv06anppn0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
