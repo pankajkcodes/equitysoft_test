@@ -20,8 +20,38 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
         .set({"name": catName, "id": randomId});
   }
 
+  var categoryList = [];
+  var categoryDocList = [];
+
+  _getCategoryList() {
+    var data = FirebaseFirestore.instance.collection("categories").get();
+    data.then((value) {
+      categoryList.clear();
+      for (var doc in value.docs) {
+        setState((){
+          categoryList.add(doc.data()['name']);
+          categoryDocList.add(doc.data()['id']);
+        });
+
+      }
+    });
+  }
+
+  _deleteCategory(String docId) {
+    FirebaseFirestore.instance
+        .collection("categories")
+        .doc(docId)
+        .delete()
+        .then((value) {
+      setState(() {
+        categoryList;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _getCategoryList();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -51,7 +81,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                   onPressed: () {
                     if (controller.text.trim() == "") {
                       ScaffoldMessenger.of(context).showSnackBar(
-                         const SnackBar(content: Text("Can't be empty")));
+                          const SnackBar(content: Text("Can't be empty")));
                     } else {
                       _addNewCategory(controller.text.trim());
                     }
@@ -68,25 +98,29 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
               ),
               SizedBox(
                 height: height(context) * 0.68,
-                child: ListView.builder(itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    height: height(context) * 0.07,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: ListTile(
-                      leading: Text(
-                        "$index",
-                        style: bodyText1(color: Colors.white),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.delete, color: Colors.white),
-                      ),
-                    ),
-                  );
-                }),
+                child: ListView.builder(
+                    itemCount: categoryList.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.only(top: 15),
+                        height: height(context) * 0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: ListTile(
+                          leading: Text(
+                            categoryList[index],
+                            style: bodyText1(color: Colors.white),
+                          ),
+                          trailing: IconButton(
+                            onPressed: () {
+                              _deleteCategory(categoryDocList[index]);
+                            },
+                            icon: const Icon(Icons.delete, color: Colors.white),
+                          ),
+                        ),
+                      );
+                    }),
               )
             ],
           ),
